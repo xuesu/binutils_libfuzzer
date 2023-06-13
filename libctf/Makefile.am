@@ -25,6 +25,7 @@ AUTOMAKE_OPTIONS = foreign no-texinfo.tex
 # -I../zlib, unless we were configured with --with-system-zlib, in which
 # case both are empty.
 ZLIB = @zlibdir@ -lz
+ZFUZZERLIB = @zlibdir@ -lzfuzzer
 ZLIBINC = @zlibinc@
 
 INCDIR = $(srcdir)/../include
@@ -32,11 +33,11 @@ AM_CPPFLAGS = -D_GNU_SOURCE -I$(srcdir) -I$(srcdir)/../include -I$(srcdir)/../bf
 AM_CFLAGS = -std=gnu99 @ac_libctf_warn_cflags@ @warn@ @c_warn@ @WARN_PEDANTIC@ @WERROR@ $(ZLIBINC)
 
 if INSTALL_LIBBFD
-lib_LTLIBRARIES = libctf@CTF_SOVER_EXT@.la libctf-nobfd@CTF_SOVER_EXT@.la
+lib_LTLIBRARIES = libctf@CTF_SOVER_EXT@.la libctf-nobfd@CTF_SOVER_EXT@.la libctf-nobfd-fuzzer@CTF_SOVER_EXT@.la 
 include_HEADERS = $(INCDIR)/ctf.h $(INCDIR)/ctf-api.h
 else
 include_HEADERS =
-noinst_LTLIBRARIES = libctf@CTF_SOVER_EXT@.la libctf-nobfd@CTF_SOVER_EXT@.la
+noinst_LTLIBRARIES = libctf@CTF_SOVER_EXT@.la libctf-nobfd@CTF_SOVER_EXT@.la libctf-nobfd-fuzzer@CTF_SOVER_EXT@.la 
 endif
 
 COMMON_LIB_SOURCES = ctf-archive.c ctf-dump.c ctf-create.c ctf-decl.c ctf-error.c \
@@ -53,3 +54,8 @@ libctf@CTF_SOVER_EXT@_la_LIBADD = @BFD_LIBADD@ $(libctf_nobfd@CTF_SOVER_EXT@_la_
 libctf@CTF_SOVER_EXT@_la_DEPENDENCIES = @BFD_DEPENDENCIES@
 libctf@CTF_SOVER_EXT@_la_LDFLAGS = $(libctf_nobfd@CTF_SOVER_EXT@_la_LDFLAGS)
 libctf@CTF_SOVER_EXT@_la_SOURCES = $(COMMON_LIB_SOURCES) ctf-open-bfd.c
+
+
+libctf_nobfd_fuzzer@CTF_SOVER_EXT@_la_LIBADD = @SHARED_LIBADD@ $(ZFUZZERLIB)
+libctf_nobfd_fuzzer@CTF_SOVER_EXT@_la_CFLAGS =  -fsanitize=fuzzer-no-link  @SHARED_LDFLAGS@ @VERSION_FLAGS@
+libctf_nobfd_fuzzer@CTF_SOVER_EXT@_la_SOURCES = $(COMMON_LIB_SOURCES)

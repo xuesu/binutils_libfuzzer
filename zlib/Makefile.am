@@ -14,7 +14,7 @@ if TARGET_LIBRARY
 noinst_LTLIBRARIES = libzgcj_convenience.la
 libzgcj_convenience_la_SOURCES = $(ZLIB_SOURCES)
 else
-toolexeclib_LIBRARIES = libz.a
+toolexeclib_LIBRARIES = libz.a libzfuzzer.a
 libz_a_SOURCES = $(ZLIB_SOURCES)
 libz_a_CFLAGS = $(AM_CFLAGS) $(PICFLAG)
 endif
@@ -61,3 +61,7 @@ AM_MAKEFLAGS = \
 	"DESTDIR=$(DESTDIR)"
 
 include $(top_srcdir)/../multilib.am
+
+libzfuzzer_a_CFLAGS =  -fsanitize=fuzzer-no-link $(AM_CFLAGS) $(PICFLAG)
+libzfuzzer_a_LDFLAGS =  -fsanitize=fuzzer-no-link
+libzfuzzer_a_SOURCES = $(ZLIB_SOURCES)

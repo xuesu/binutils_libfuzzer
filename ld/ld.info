@@ -1,4 +1,4 @@
-This is ld.info, produced by makeinfo version 6.5 from ld.texi.
+This is ld.info, produced by makeinfo version 6.7 from ld.texi.
 
 This file documents the GNU linker LD (GNU Binutils) version 2.34.
 
@@ -6884,7 +6884,8 @@ speed.
    One minor artifact of the BFD solution which you should bear in mind
 is the potential for information loss.  There are two places where
 useful information can be lost using the BFD mechanism: during
-conversion and during output.  *Note BFD information loss::.
+conversion and during output.  See BFD information loss in the BFD
+internal documentation.
 
 * Menu:
 
@@ -8833,14 +8834,19 @@ Node: TI COFF276563
 Node: WIN32277089
 Node: Xtensa297236
 Node: BFD300202
-Node: BFD outline301660
-Node: BFD information loss302948
-Node: Canonical format305474
-Node: Reporting Bugs309802
-Node: Bug Criteria310496
-Node: Bug Reporting311195
-Node: MRI318233
-Node: GNU Free Documentation License322704
-Node: LD Index347841
+Node: BFD outline301690
+Node: BFD information loss302978
+Node: Canonical format305504
+Node: Reporting Bugs309832
+Node: Bug Criteria310526
+Node: Bug Reporting311225
+Node: MRI318263
+Node: GNU Free Documentation License322734
+Node: LD Index347871
 
 End Tag Table
+
+
+Local Variables:
+coding: utf-8
+End:

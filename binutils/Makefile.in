@@ -110,10 +110,10 @@ host_triplet = @host@
 target_triplet = @target@
 bin_PROGRAMS = $(am__EXEEXT_5) $(am__EXEEXT_6) $(am__EXEEXT_7) \
 	$(am__EXEEXT_8) $(am__EXEEXT_9) $(am__EXEEXT_10) \
-	@BUILD_SRCONV@ @BUILD_DLLTOOL@ @BUILD_WINDRES@ @BUILD_WINDMC@ \
-	$(am__EXEEXT_11) $(am__EXEEXT_12) $(am__EXEEXT_13) \
-	@BUILD_DLLWRAP@ $(am__empty)
-noinst_PROGRAMS = $(am__EXEEXT_17) $(am__EXEEXT_21) @BUILD_MISC@
+	$(am__EXEEXT_11) @BUILD_SRCONV@ @BUILD_DLLTOOL@ \
+	@BUILD_WINDRES@ @BUILD_WINDMC@ $(am__EXEEXT_12) \
+	$(am__EXEEXT_13) $(am__EXEEXT_14) @BUILD_DLLWRAP@
+noinst_PROGRAMS = $(am__EXEEXT_18) $(am__EXEEXT_22) @BUILD_MISC@
 EXTRA_PROGRAMS = srconv$(EXEEXT) sysdump$(EXEEXT) coffdump$(EXEEXT) \
 	$(am__EXEEXT_1) $(am__EXEEXT_2) $(am__EXEEXT_3) \
 	$(am__EXEEXT_4)
@@ -155,24 +155,25 @@ am__EXEEXT_1 = dlltool$(EXEEXT)
 am__EXEEXT_2 = windres$(EXEEXT)
 am__EXEEXT_3 = windmc$(EXEEXT)
 am__EXEEXT_4 = dllwrap$(EXEEXT)
-am__EXEEXT_5 = size$(EXEEXT)
-am__EXEEXT_6 = objdump$(EXEEXT)
-am__EXEEXT_7 = ar$(EXEEXT)
-am__EXEEXT_8 = strings$(EXEEXT)
-am__EXEEXT_9 = ranlib$(EXEEXT)
-am__EXEEXT_10 = objcopy$(EXEEXT)
-am__EXEEXT_11 = addr2line$(EXEEXT)
-am__EXEEXT_12 = readelf$(EXEEXT)
-am__EXEEXT_13 = elfedit$(EXEEXT)
+am__EXEEXT_5 = fuzzerreadelf$(EXEEXT)
+am__EXEEXT_6 = size$(EXEEXT)
+am__EXEEXT_7 = objdump$(EXEEXT)
+am__EXEEXT_8 = ar$(EXEEXT)
+am__EXEEXT_9 = strings$(EXEEXT)
+am__EXEEXT_10 = ranlib$(EXEEXT)
+am__EXEEXT_11 = objcopy$(EXEEXT)
+am__EXEEXT_12 = addr2line$(EXEEXT)
+am__EXEEXT_13 = readelf$(EXEEXT)
+am__EXEEXT_14 = elfedit$(EXEEXT)
 am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(bindir)"
-am__EXEEXT_14 = nm-new$(EXEEXT)
-am__EXEEXT_15 = strip-new$(EXEEXT)
-am__EXEEXT_16 = cxxfilt$(EXEEXT)
-am__EXEEXT_17 = $(am__EXEEXT_14) $(am__EXEEXT_15) $(am__EXEEXT_16)
-am__EXEEXT_18 = bfdtest1$(EXEEXT)
-am__EXEEXT_19 = bfdtest2$(EXEEXT)
-am__EXEEXT_20 = testsuite/gentestdlls$(EXEEXT)
-am__EXEEXT_21 = $(am__EXEEXT_18) $(am__EXEEXT_19) $(am__EXEEXT_20)
+am__EXEEXT_15 = nm-new$(EXEEXT)
+am__EXEEXT_16 = strip-new$(EXEEXT)
+am__EXEEXT_17 = cxxfilt$(EXEEXT)
+am__EXEEXT_18 = $(am__EXEEXT_15) $(am__EXEEXT_16) $(am__EXEEXT_17)
+am__EXEEXT_19 = bfdtest1$(EXEEXT)
+am__EXEEXT_20 = bfdtest2$(EXEEXT)
+am__EXEEXT_21 = testsuite/gentestdlls$(EXEEXT)
+am__EXEEXT_22 = $(am__EXEEXT_19) $(am__EXEEXT_20) $(am__EXEEXT_21)
 PROGRAMS = $(bin_PROGRAMS) $(noinst_PROGRAMS)
 am__objects_1 = bucomm.$(OBJEXT) version.$(OBJEXT) filemode.$(OBJEXT)
 am_addr2line_OBJECTS = addr2line.$(OBJEXT) $(am__objects_1)
@@ -209,18 +210,27 @@ am__objects_2 = elfcomm.$(OBJEXT)
 am_elfedit_OBJECTS = elfedit.$(OBJEXT) version.$(OBJEXT) \
 	$(am__objects_2)
 elfedit_OBJECTS = $(am_elfedit_OBJECTS)
+am__objects_3 = fuzzerreadelf-elfcomm.$(OBJEXT)
+am_fuzzerreadelf_OBJECTS = fuzzerreadelf-fuzzerreadelf.$(OBJEXT) \
+	fuzzerreadelf-version.$(OBJEXT) \
+	fuzzerreadelf-unwind-ia64.$(OBJEXT) \
+	fuzzerreadelf-dwarf.$(OBJEXT) $(am__objects_3)
+fuzzerreadelf_OBJECTS = $(am_fuzzerreadelf_OBJECTS)
+fuzzerreadelf_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(fuzzerreadelf_CFLAGS) \
+	$(CFLAGS) $(fuzzerreadelf_LDFLAGS) $(LDFLAGS) -o $@
 am_nm_new_OBJECTS = nm.$(OBJEXT) $(am__objects_1)
 nm_new_OBJECTS = $(am_nm_new_OBJECTS)
 nm_new_LDADD = $(LDADD)
-am__objects_3 = rddbg.$(OBJEXT) debug.$(OBJEXT) stabs.$(OBJEXT) \
+am__objects_4 = rddbg.$(OBJEXT) debug.$(OBJEXT) stabs.$(OBJEXT) \
 	rdcoff.$(OBJEXT)
-am__objects_4 = $(am__objects_3) wrstabs.$(OBJEXT)
+am__objects_5 = $(am__objects_4) wrstabs.$(OBJEXT)
 am_objcopy_OBJECTS = objcopy.$(OBJEXT) not-strip.$(OBJEXT) \
-	rename.$(OBJEXT) $(am__objects_4) $(am__objects_1)
+	rename.$(OBJEXT) $(am__objects_5) $(am__objects_1)
 objcopy_OBJECTS = $(am_objcopy_OBJECTS)
 objcopy_LDADD = $(LDADD)
 am_objdump_OBJECTS = objdump.$(OBJEXT) dwarf.$(OBJEXT) prdbg.$(OBJEXT) \
-	$(am__objects_3) $(am__objects_1) $(am__objects_2)
+	$(am__objects_4) $(am__objects_1) $(am__objects_2)
 objdump_OBJECTS = $(am_objdump_OBJECTS)
 am_ranlib_OBJECTS = ar.$(OBJEXT) is-ranlib.$(OBJEXT) arparse.$(OBJEXT) \
 	arlex.$(OBJEXT) arsup.$(OBJEXT) rename.$(OBJEXT) \
@@ -240,7 +250,7 @@ am_strings_OBJECTS = strings.$(OBJEXT) $(am__objects_1)
 strings_OBJECTS = $(am_strings_OBJECTS)
 strings_LDADD = $(LDADD)
 am_strip_new_OBJECTS = objcopy.$(OBJEXT) is-strip.$(OBJEXT) \
-	rename.$(OBJEXT) $(am__objects_4) $(am__objects_1)
+	rename.$(OBJEXT) $(am__objects_5) $(am__objects_1)
 strip_new_OBJECTS = $(am_strip_new_OBJECTS)
 strip_new_LDADD = $(LDADD)
 am_sysdump_OBJECTS = sysdump.$(OBJEXT) $(am__objects_1)
@@ -344,10 +354,10 @@ am__v_YACC_1 =
 SOURCES = $(addr2line_SOURCES) $(ar_SOURCES) $(EXTRA_ar_SOURCES) \
 	bfdtest1.c bfdtest2.c $(coffdump_SOURCES) $(cxxfilt_SOURCES) \
 	$(dlltool_SOURCES) $(dllwrap_SOURCES) $(elfedit_SOURCES) \
-	$(nm_new_SOURCES) $(objcopy_SOURCES) $(objdump_SOURCES) \
-	$(EXTRA_objdump_SOURCES) $(ranlib_SOURCES) $(readelf_SOURCES) \
-	$(size_SOURCES) $(srconv_SOURCES) $(strings_SOURCES) \
-	$(strip_new_SOURCES) $(sysdump_SOURCES) \
+	$(fuzzerreadelf_SOURCES) $(nm_new_SOURCES) $(objcopy_SOURCES) \
+	$(objdump_SOURCES) $(EXTRA_objdump_SOURCES) $(ranlib_SOURCES) \
+	$(readelf_SOURCES) $(size_SOURCES) $(srconv_SOURCES) \
+	$(strings_SOURCES) $(strip_new_SOURCES) $(sysdump_SOURCES) \
 	testsuite/gentestdlls.c $(windmc_SOURCES) $(windres_SOURCES)
 RECURSIVE_TARGETS = all-recursive check-recursive cscopelist-recursive \
 	ctags-recursive dvi-recursive html-recursive info-recursive \
@@ -459,7 +469,6 @@ LIBINTL_DEP = @LIBINTL_DEP@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
 LIBTOOL = @LIBTOOL@
-LIPO = @LIPO@
 LN_S = @LN_S@
 LTLIBICONV = @LTLIBICONV@
 LTLIBOBJS = @LTLIBOBJS@
@@ -472,14 +481,11 @@ MSGMERGE = @MSGMERGE@
 NM = @NM@
 NMEDIT = @NMEDIT@
 NO_WERROR = @NO_WERROR@
-OBJDUMP = @OBJDUMP@
 OBJDUMP_DEFS = @OBJDUMP_DEFS@
 
 # Extra object files for objdump
 OBJDUMP_PRIVATE_OFILES = @OBJDUMP_PRIVATE_OFILES@
 OBJEXT = @OBJEXT@
-OTOOL = @OTOOL@
-OTOOL64 = @OTOOL64@
 PACKAGE = @PACKAGE@
 PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
 PACKAGE_NAME = @PACKAGE_NAME@
@@ -538,6 +544,7 @@ libdir = @libdir@
 libexecdir = @libexecdir@
 localedir = @localedir@
 localstatedir = @localstatedir@
+lt_ECHO = @lt_ECHO@
 mandir = @mandir@
 mkdir_p = @mkdir_p@
 oldincludedir = @oldincludedir@
@@ -545,6 +552,7 @@ pdfdir = @pdfdir@
 prefix = @prefix@
 program_transform_name = @program_transform_name@
 psdir = @psdir@
+runstatedir = @runstatedir@
 sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 srcdir = @srcdir@
@@ -586,6 +594,7 @@ OBJCOPY_PROG = objcopy
 STRIP_PROG = strip-new
 STRINGS_PROG = strings
 READELF_PROG = readelf
+FUZZERREADELF_PROG = fuzzerreadelf
 ELFEDIT_PROG = elfedit
 
 # These should all be the same program too.
@@ -611,7 +620,7 @@ TEST_PROGS = $(BFDTEST1_PROG) $(BFDTEST2_PROG) $(GENTESTDLLS_PROG)
 RENAMED_PROGS = $(NM_PROG) $(STRIP_PROG) $(DEMANGLER_PROG)
 
 # Stuff that goes in tooldir/ if appropriate.
-TOOL_PROGS = nm-new strip-new ar ranlib dlltool objdump objcopy readelf
+TOOL_PROGS = nm-new strip-new ar ranlib dlltool objdump objcopy readelf fuzzerreadelf
 BASEDIR = $(srcdir)/..
 BFDDIR = $(BASEDIR)/bfd
 INCDIR = $(BASEDIR)/include
@@ -638,7 +647,7 @@ CFILES = \
 	nm.c not-ranlib.c not-strip.c \
 	objcopy.c objdump.c prdbg.c \
 	od-xcoff.c od-macho.c \
-	rclex.c rdcoff.c rddbg.c readelf.c rename.c \
+	rclex.c rdcoff.c rddbg.c readelf.c fuzzerreadelf.c rename.c \
 	resbin.c rescoff.c resrc.c resres.c \
 	size.c srconv.c stabs.c strings.c sysdump.c \
 	syslex_wrap.c unwind-ia64.c elfedit.c version.c \
@@ -661,7 +670,10 @@ BFDLIB = ../bfd/libbfd.la
 OPCODES = ../opcodes/libopcodes.la
 LIBCTF = ../libctf/libctf@CTF_SOVER_EXT@.la
 LIBCTF_NOBFD = ../libctf/libctf-nobfd@CTF_SOVER_EXT@.la
+LIBCTFFUZZER_NOBFD = ../libctf/libctf-nobfd@CTF_SOVER_EXT@-fuzzer.la
 LIBIBERTY = ../libiberty/libiberty.a
+LIBFUZZERIBERTY = ../libiberty/libfuzzeriberty/libfuzzeriberty.a
+LIBZFUZZER = ../zlib/libzfuzzer.a
 POTFILES = $(CFILES) $(DEBUG_SRCS) $(HFILES)
 EXPECT = expect
 RUNTEST = runtest
@@ -701,6 +713,7 @@ windres_DEPENDENCIES = $(LIBINTL_DEP) $(LIBIBERTY) $(BFDLIB)
 windmc_DEPENDENCIES = $(LIBINTL_DEP) $(LIBIBERTY) $(BFDLIB)
 addr2line_DEPENDENCIES = $(LIBINTL_DEP) $(LIBIBERTY) $(BFDLIB)
 readelf_DEPENDENCIES = $(LIBINTL_DEP) $(LIBIBERTY) $(LIBCTF_NOBFD)
+fuzzerreadelf_DEPENDENCIES = $(LIBZFUZZER) $(LIBFUZZERIBERTY) $(LIBCTFFUZZER_NOBFD)
 elfedit_DEPENDENCIES = $(LIBINTL_DEP) $(LIBIBERTY)
 dllwrap_DEPENDENCIES = $(LIBINTL_DEP) $(LIBIBERTY)
 bfdtest1_DEPENDENCIES = $(LIBINTL_DEP) $(LIBIBERTY) $(BFDLIB)
@@ -711,6 +724,11 @@ objcopy_SOURCES = objcopy.c not-strip.c rename.c $(WRITE_DEBUG_SRCS) $(BULIBS)
 strings_SOURCES = strings.c $(BULIBS)
 readelf_SOURCES = readelf.c version.c unwind-ia64.c dwarf.c $(ELFLIBS)
 readelf_LDADD = $(LIBINTL) $(LIBCTF_NOBFD) $(LIBIBERTY) $(ZLIB) $(LIBDEBUGINFOD)
+fuzzerreadelf_SOURCES = fuzzerreadelf.c version.c unwind-ia64.c dwarf.c $(ELFLIBS)
+fuzzerreadelf_LDADD = $(LIBINTL) $(LIBCTFFUZZER_NOBFD) $(LIBFUZZERIBERTY) $(ZFUZZERLIB) $(LIBDEBUGINFOD)
+fuzzerreadelf_CFLAGS = -fsanitize=fuzzer
+fuzzerreadelf_CXXFLAGS = -fsanitize=fuzzer
+fuzzerreadelf_LDFLAGS = -fsanitize=fuzzer
 elfedit_SOURCES = elfedit.c version.c $(ELFLIBS)
 elfedit_LDADD = $(LIBINTL) $(LIBIBERTY)
 strip_new_SOURCES = objcopy.c is-strip.c rename.c $(WRITE_DEBUG_SRCS) $(BULIBS)
@@ -914,6 +932,10 @@ elfedit$(EXEEXT): $(elfedit_OBJECTS) $(elfedit_DEPENDENCIES) $(EXTRA_elfedit_DEP
 	@rm -f elfedit$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(elfedit_OBJECTS) $(elfedit_LDADD) $(LIBS)
 
+fuzzerreadelf$(EXEEXT): $(fuzzerreadelf_OBJECTS) $(fuzzerreadelf_DEPENDENCIES) $(EXTRA_fuzzerreadelf_DEPENDENCIES) 
+	@rm -f fuzzerreadelf$(EXEEXT)
+	$(AM_V_CCLD)$(fuzzerreadelf_LINK) $(fuzzerreadelf_OBJECTS) $(fuzzerreadelf_LDADD) $(LIBS)
+
 nm-new$(EXEEXT): $(nm_new_OBJECTS) $(nm_new_DEPENDENCIES) $(EXTRA_nm_new_DEPENDENCIES) 
 	@rm -f nm-new$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(nm_new_OBJECTS) $(nm_new_LDADD) $(LIBS)
@@ -1047,6 +1069,12 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/emul_aix.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/emul_vanilla.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/filemode.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fuzzerreadelf-dwarf.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fuzzerreadelf-elfcomm.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fuzzerreadelf-fuzzerreadelf.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fuzzerreadelf-unwind-ia64.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fuzzerreadelf-version.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fuzzerreadelf.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/is-ranlib.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/is-strip.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/maybe-ranlib.Po@am__quote@
@@ -1108,6 +1136,76 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LTCOMPILE) -c -o $@ $<
+
+fuzzerreadelf-fuzzerreadelf.o: fuzzerreadelf.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fuzzerreadelf_CFLAGS) $(CFLAGS) -MT fuzzerreadelf-fuzzerreadelf.o -MD -MP -MF $(DEPDIR)/fuzzerreadelf-fuzzerreadelf.Tpo -c -o fuzzerreadelf-fuzzerreadelf.o `test -f 'fuzzerreadelf.c' || echo '$(srcdir)/'`fuzzerreadelf.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/fuzzerreadelf-fuzzerreadelf.Tpo $(DEPDIR)/fuzzerreadelf-fuzzerreadelf.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='fuzzerreadelf.c' object='fuzzerreadelf-fuzzerreadelf.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fuzzerreadelf_CFLAGS) $(CFLAGS) -c -o fuzzerreadelf-fuzzerreadelf.o `test -f 'fuzzerreadelf.c' || echo '$(srcdir)/'`fuzzerreadelf.c
+
+fuzzerreadelf-fuzzerreadelf.obj: fuzzerreadelf.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fuzzerreadelf_CFLAGS) $(CFLAGS) -MT fuzzerreadelf-fuzzerreadelf.obj -MD -MP -MF $(DEPDIR)/fuzzerreadelf-fuzzerreadelf.Tpo -c -o fuzzerreadelf-fuzzerreadelf.obj `if test -f 'fuzzerreadelf.c'; then $(CYGPATH_W) 'fuzzerreadelf.c'; else $(CYGPATH_W) '$(srcdir)/fuzzerreadelf.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/fuzzerreadelf-fuzzerreadelf.Tpo $(DEPDIR)/fuzzerreadelf-fuzzerreadelf.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='fuzzerreadelf.c' object='fuzzerreadelf-fuzzerreadelf.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fuzzerreadelf_CFLAGS) $(CFLAGS) -c -o fuzzerreadelf-fuzzerreadelf.obj `if test -f 'fuzzerreadelf.c'; then $(CYGPATH_W) 'fuzzerreadelf.c'; else $(CYGPATH_W) '$(srcdir)/fuzzerreadelf.c'; fi`
+
+fuzzerreadelf-version.o: version.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fuzzerreadelf_CFLAGS) $(CFLAGS) -MT fuzzerreadelf-version.o -MD -MP -MF $(DEPDIR)/fuzzerreadelf-version.Tpo -c -o fuzzerreadelf-version.o `test -f 'version.c' || echo '$(srcdir)/'`version.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/fuzzerreadelf-version.Tpo $(DEPDIR)/fuzzerreadelf-version.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='version.c' object='fuzzerreadelf-version.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fuzzerreadelf_CFLAGS) $(CFLAGS) -c -o fuzzerreadelf-version.o `test -f 'version.c' || echo '$(srcdir)/'`version.c
+
+fuzzerreadelf-version.obj: version.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fuzzerreadelf_CFLAGS) $(CFLAGS) -MT fuzzerreadelf-version.obj -MD -MP -MF $(DEPDIR)/fuzzerreadelf-version.Tpo -c -o fuzzerreadelf-version.obj `if test -f 'version.c'; then $(CYGPATH_W) 'version.c'; else $(CYGPATH_W) '$(srcdir)/version.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/fuzzerreadelf-version.Tpo $(DEPDIR)/fuzzerreadelf-version.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='version.c' object='fuzzerreadelf-version.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fuzzerreadelf_CFLAGS) $(CFLAGS) -c -o fuzzerreadelf-version.obj `if test -f 'version.c'; then $(CYGPATH_W) 'version.c'; else $(CYGPATH_W) '$(srcdir)/version.c'; fi`
+
+fuzzerreadelf-unwind-ia64.o: unwind-ia64.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fuzzerreadelf_CFLAGS) $(CFLAGS) -MT fuzzerreadelf-unwind-ia64.o -MD -MP -MF $(DEPDIR)/fuzzerreadelf-unwind-ia64.Tpo -c -o fuzzerreadelf-unwind-ia64.o `test -f 'unwind-ia64.c' || echo '$(srcdir)/'`unwind-ia64.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/fuzzerreadelf-unwind-ia64.Tpo $(DEPDIR)/fuzzerreadelf-unwind-ia64.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='unwind-ia64.c' object='fuzzerreadelf-unwind-ia64.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fuzzerreadelf_CFLAGS) $(CFLAGS) -c -o fuzzerreadelf-unwind-ia64.o `test -f 'unwind-ia64.c' || echo '$(srcdir)/'`unwind-ia64.c
+
+fuzzerreadelf-unwind-ia64.obj: unwind-ia64.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fuzzerreadelf_CFLAGS) $(CFLAGS) -MT fuzzerreadelf-unwind-ia64.obj -MD -MP -MF $(DEPDIR)/fuzzerreadelf-unwind-ia64.Tpo -c -o fuzzerreadelf-unwind-ia64.obj `if test -f 'unwind-ia64.c'; then $(CYGPATH_W) 'unwind-ia64.c'; else $(CYGPATH_W) '$(srcdir)/unwind-ia64.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/fuzzerreadelf-unwind-ia64.Tpo $(DEPDIR)/fuzzerreadelf-unwind-ia64.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='unwind-ia64.c' object='fuzzerreadelf-unwind-ia64.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fuzzerreadelf_CFLAGS) $(CFLAGS) -c -o fuzzerreadelf-unwind-ia64.obj `if test -f 'unwind-ia64.c'; then $(CYGPATH_W) 'unwind-ia64.c'; else $(CYGPATH_W) '$(srcdir)/unwind-ia64.c'; fi`
+
+fuzzerreadelf-dwarf.o: dwarf.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fuzzerreadelf_CFLAGS) $(CFLAGS) -MT fuzzerreadelf-dwarf.o -MD -MP -MF $(DEPDIR)/fuzzerreadelf-dwarf.Tpo -c -o fuzzerreadelf-dwarf.o `test -f 'dwarf.c' || echo '$(srcdir)/'`dwarf.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/fuzzerreadelf-dwarf.Tpo $(DEPDIR)/fuzzerreadelf-dwarf.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='dwarf.c' object='fuzzerreadelf-dwarf.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fuzzerreadelf_CFLAGS) $(CFLAGS) -c -o fuzzerreadelf-dwarf.o `test -f 'dwarf.c' || echo '$(srcdir)/'`dwarf.c
+
+fuzzerreadelf-dwarf.obj: dwarf.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fuzzerreadelf_CFLAGS) $(CFLAGS) -MT fuzzerreadelf-dwarf.obj -MD -MP -MF $(DEPDIR)/fuzzerreadelf-dwarf.Tpo -c -o fuzzerreadelf-dwarf.obj `if test -f 'dwarf.c'; then $(CYGPATH_W) 'dwarf.c'; else $(CYGPATH_W) '$(srcdir)/dwarf.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/fuzzerreadelf-dwarf.Tpo $(DEPDIR)/fuzzerreadelf-dwarf.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='dwarf.c' object='fuzzerreadelf-dwarf.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fuzzerreadelf_CFLAGS) $(CFLAGS) -c -o fuzzerreadelf-dwarf.obj `if test -f 'dwarf.c'; then $(CYGPATH_W) 'dwarf.c'; else $(CYGPATH_W) '$(srcdir)/dwarf.c'; fi`
+
+fuzzerreadelf-elfcomm.o: elfcomm.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fuzzerreadelf_CFLAGS) $(CFLAGS) -MT fuzzerreadelf-elfcomm.o -MD -MP -MF $(DEPDIR)/fuzzerreadelf-elfcomm.Tpo -c -o fuzzerreadelf-elfcomm.o `test -f 'elfcomm.c' || echo '$(srcdir)/'`elfcomm.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/fuzzerreadelf-elfcomm.Tpo $(DEPDIR)/fuzzerreadelf-elfcomm.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='elfcomm.c' object='fuzzerreadelf-elfcomm.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fuzzerreadelf_CFLAGS) $(CFLAGS) -c -o fuzzerreadelf-elfcomm.o `test -f 'elfcomm.c' || echo '$(srcdir)/'`elfcomm.c
+
+fuzzerreadelf-elfcomm.obj: elfcomm.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fuzzerreadelf_CFLAGS) $(CFLAGS) -MT fuzzerreadelf-elfcomm.obj -MD -MP -MF $(DEPDIR)/fuzzerreadelf-elfcomm.Tpo -c -o fuzzerreadelf-elfcomm.obj `if test -f 'elfcomm.c'; then $(CYGPATH_W) 'elfcomm.c'; else $(CYGPATH_W) '$(srcdir)/elfcomm.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/fuzzerreadelf-elfcomm.Tpo $(DEPDIR)/fuzzerreadelf-elfcomm.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='elfcomm.c' object='fuzzerreadelf-elfcomm.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fuzzerreadelf_CFLAGS) $(CFLAGS) -c -o fuzzerreadelf-elfcomm.obj `if test -f 'elfcomm.c'; then $(CYGPATH_W) 'elfcomm.c'; else $(CYGPATH_W) '$(srcdir)/elfcomm.c'; fi`
 
 .l.c:
 	$(AM_V_LEX)$(am__skiplex) $(SHELL) $(YLWRAP) $< $(LEX_OUTPUT_ROOT).c $@ -- $(LEXCOMPILE)

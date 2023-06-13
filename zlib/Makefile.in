@@ -94,11 +94,10 @@ subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/../config/depstand.m4 \
 	$(top_srcdir)/../config/lead-dot.m4 \
-	$(top_srcdir)/../config/multi.m4 \
 	$(top_srcdir)/../config/override.m4 \
 	$(top_srcdir)/../ltoptions.m4 $(top_srcdir)/../ltsugar.m4 \
 	$(top_srcdir)/../ltversion.m4 $(top_srcdir)/../lt~obsolete.m4 \
-	$(top_srcdir)/acinclude.m4 \
+	$(top_srcdir)/../multi.m4 $(top_srcdir)/acinclude.m4 \
 	$(top_srcdir)/../config/no-executables.m4 \
 	$(top_srcdir)/../libtool.m4 $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
@@ -160,6 +159,18 @@ am__objects_1 = libz_a-adler32.$(OBJEXT) libz_a-compress.$(OBJEXT) \
 	libz_a-zutil.$(OBJEXT)
 @TARGET_LIBRARY_FALSE@am_libz_a_OBJECTS = $(am__objects_1)
 libz_a_OBJECTS = $(am_libz_a_OBJECTS)
+libzfuzzer_a_AR = $(AR) $(ARFLAGS)
+libzfuzzer_a_LIBADD =
+am__objects_2 = libzfuzzer_a-adler32.$(OBJEXT) \
+	libzfuzzer_a-compress.$(OBJEXT) libzfuzzer_a-crc32.$(OBJEXT) \
+	libzfuzzer_a-deflate.$(OBJEXT) libzfuzzer_a-gzread.$(OBJEXT) \
+	libzfuzzer_a-gzclose.$(OBJEXT) libzfuzzer_a-gzwrite.$(OBJEXT) \
+	libzfuzzer_a-gzlib.$(OBJEXT) libzfuzzer_a-infback.$(OBJEXT) \
+	libzfuzzer_a-inffast.$(OBJEXT) libzfuzzer_a-inflate.$(OBJEXT) \
+	libzfuzzer_a-inftrees.$(OBJEXT) libzfuzzer_a-trees.$(OBJEXT) \
+	libzfuzzer_a-uncompr.$(OBJEXT) libzfuzzer_a-zutil.$(OBJEXT)
+am_libzfuzzer_a_OBJECTS = $(am__objects_2)
+libzfuzzer_a_OBJECTS = $(am_libzfuzzer_a_OBJECTS)
 LTLIBRARIES = $(noinst_LTLIBRARIES)
 libzgcj_convenience_la_LIBADD =
 am__libzgcj_convenience_la_SOURCES_DIST = adler32.c compress.c crc32.c \
@@ -167,11 +178,11 @@ am__libzgcj_convenience_la_SOURCES_DIST = adler32.c compress.c crc32.c \
 	gzwrite.c gzlib.c infback.c inffast.c inffast.h inffixed.h \
 	inflate.c inflate.h inftrees.c inftrees.h trees.c trees.h \
 	uncompr.c zconf.h zconf.h.in zlib.h zutil.c zutil.h
-am__objects_2 = adler32.lo compress.lo crc32.lo deflate.lo gzread.lo \
+am__objects_3 = adler32.lo compress.lo crc32.lo deflate.lo gzread.lo \
 	gzclose.lo gzwrite.lo gzlib.lo infback.lo inffast.lo \
 	inflate.lo inftrees.lo trees.lo uncompr.lo zutil.lo
 @TARGET_LIBRARY_TRUE@am_libzgcj_convenience_la_OBJECTS =  \
-@TARGET_LIBRARY_TRUE@	$(am__objects_2)
+@TARGET_LIBRARY_TRUE@	$(am__objects_3)
 libzgcj_convenience_la_OBJECTS = $(am_libzgcj_convenience_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -212,8 +223,9 @@ AM_V_CCLD = $(am__v_CCLD_@AM_V@)
 am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = $(libz_a_SOURCES) $(libzgcj_convenience_la_SOURCES)
-DIST_SOURCES = $(am__libz_a_SOURCES_DIST) \
+SOURCES = $(libz_a_SOURCES) $(libzfuzzer_a_SOURCES) \
+	$(libzgcj_convenience_la_SOURCES)
+DIST_SOURCES = $(am__libz_a_SOURCES_DIST) $(libzfuzzer_a_SOURCES) \
 	$(am__libzgcj_convenience_la_SOURCES_DIST)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
@@ -300,7 +312,6 @@ LDFLAGS = @LDFLAGS@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
 LIBTOOL = @LIBTOOL@
-LIPO = @LIPO@
 LN_S = @LN_S@
 LTLIBOBJS = @LTLIBOBJS@
 MAINT = @MAINT@
@@ -308,10 +319,7 @@ MAKEINFO = @MAKEINFO@
 MKDIR_P = @MKDIR_P@
 NM = @NM@
 NMEDIT = @NMEDIT@
-OBJDUMP = @OBJDUMP@
 OBJEXT = @OBJEXT@
-OTOOL = @OTOOL@
-OTOOL64 = @OTOOL64@
 PACKAGE = @PACKAGE@
 PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
 PACKAGE_NAME = @PACKAGE_NAME@
@@ -363,6 +371,7 @@ libdir = @libdir@
 libexecdir = @libexecdir@
 localedir = @localedir@
 localstatedir = @localstatedir@
+lt_ECHO = @lt_ECHO@
 mandir = @mandir@
 mkdir_p = @mkdir_p@
 mkinstalldirs = @mkinstalldirs@
@@ -372,6 +381,7 @@ pdfdir = @pdfdir@
 prefix = @prefix@
 program_transform_name = @program_transform_name@
 psdir = @psdir@
+runstatedir = @runstatedir@
 sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 srcdir = @srcdir@
@@ -397,7 +407,7 @@ zconf.h.in zlib.h zutil.c zutil.h
 
 @TARGET_LIBRARY_TRUE@noinst_LTLIBRARIES = libzgcj_convenience.la
 @TARGET_LIBRARY_TRUE@libzgcj_convenience_la_SOURCES = $(ZLIB_SOURCES)
-@TARGET_LIBRARY_FALSE@toolexeclib_LIBRARIES = libz.a
+@TARGET_LIBRARY_FALSE@toolexeclib_LIBRARIES = libz.a libzfuzzer.a
 @TARGET_LIBRARY_FALSE@libz_a_SOURCES = $(ZLIB_SOURCES)
 @TARGET_LIBRARY_FALSE@libz_a_CFLAGS = $(AM_CFLAGS) $(PICFLAG)
 
@@ -448,6 +458,9 @@ MULTIDIRS =
 MULTISUBDIR = 
 MULTIDO = true
 MULTICLEAN = true
+libzfuzzer_a_CFLAGS = -fsanitize=fuzzer-no-link $(AM_CFLAGS) $(PICFLAG)
+libzfuzzer_a_LDFLAGS = -fsanitize=fuzzer-no-link
+libzfuzzer_a_SOURCES = $(ZLIB_SOURCES)
 all: all-am
 
 .SUFFIXES:
@@ -523,6 +536,11 @@ libz.a: $(libz_a_OBJECTS) $(libz_a_DEPENDENCIES) $(EXTRA_libz_a_DEPENDENCIES)
 	$(AM_V_AR)$(libz_a_AR) libz.a $(libz_a_OBJECTS) $(libz_a_LIBADD)
 	$(AM_V_at)$(RANLIB) libz.a
 
+libzfuzzer.a: $(libzfuzzer_a_OBJECTS) $(libzfuzzer_a_DEPENDENCIES) $(EXTRA_libzfuzzer_a_DEPENDENCIES) 
+	$(AM_V_at)-rm -f libzfuzzer.a
+	$(AM_V_AR)$(libzfuzzer_a_AR) libzfuzzer.a $(libzfuzzer_a_OBJECTS) $(libzfuzzer_a_LIBADD)
+	$(AM_V_at)$(RANLIB) libzfuzzer.a
+
 clean-noinstLTLIBRARIES:
 	-test -z "$(noinst_LTLIBRARIES)" || rm -f $(noinst_LTLIBRARIES)
 	@list='$(noinst_LTLIBRARIES)'; \
@@ -570,6 +588,21 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libz_a-trees.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libz_a-uncompr.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libz_a-zutil.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libzfuzzer_a-adler32.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libzfuzzer_a-compress.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libzfuzzer_a-crc32.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libzfuzzer_a-deflate.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libzfuzzer_a-gzclose.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libzfuzzer_a-gzlib.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libzfuzzer_a-gzread.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libzfuzzer_a-gzwrite.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libzfuzzer_a-infback.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libzfuzzer_a-inffast.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libzfuzzer_a-inflate.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libzfuzzer_a-inftrees.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libzfuzzer_a-trees.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libzfuzzer_a-uncompr.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libzfuzzer_a-zutil.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/trees.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/uncompr.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/zutil.Plo@am__quote@
@@ -804,6 +837,216 @@ libz_a-zutil.obj: zutil.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='zutil.c' object='libz_a-zutil.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libz_a_CFLAGS) $(CFLAGS) -c -o libz_a-zutil.obj `if test -f 'zutil.c'; then $(CYGPATH_W) 'zutil.c'; else $(CYGPATH_W) '$(srcdir)/zutil.c'; fi`
+
+libzfuzzer_a-adler32.o: adler32.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -MT libzfuzzer_a-adler32.o -MD -MP -MF $(DEPDIR)/libzfuzzer_a-adler32.Tpo -c -o libzfuzzer_a-adler32.o `test -f 'adler32.c' || echo '$(srcdir)/'`adler32.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libzfuzzer_a-adler32.Tpo $(DEPDIR)/libzfuzzer_a-adler32.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='adler32.c' object='libzfuzzer_a-adler32.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -c -o libzfuzzer_a-adler32.o `test -f 'adler32.c' || echo '$(srcdir)/'`adler32.c
+
+libzfuzzer_a-adler32.obj: adler32.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -MT libzfuzzer_a-adler32.obj -MD -MP -MF $(DEPDIR)/libzfuzzer_a-adler32.Tpo -c -o libzfuzzer_a-adler32.obj `if test -f 'adler32.c'; then $(CYGPATH_W) 'adler32.c'; else $(CYGPATH_W) '$(srcdir)/adler32.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libzfuzzer_a-adler32.Tpo $(DEPDIR)/libzfuzzer_a-adler32.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='adler32.c' object='libzfuzzer_a-adler32.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -c -o libzfuzzer_a-adler32.obj `if test -f 'adler32.c'; then $(CYGPATH_W) 'adler32.c'; else $(CYGPATH_W) '$(srcdir)/adler32.c'; fi`
+
+libzfuzzer_a-compress.o: compress.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -MT libzfuzzer_a-compress.o -MD -MP -MF $(DEPDIR)/libzfuzzer_a-compress.Tpo -c -o libzfuzzer_a-compress.o `test -f 'compress.c' || echo '$(srcdir)/'`compress.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libzfuzzer_a-compress.Tpo $(DEPDIR)/libzfuzzer_a-compress.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='compress.c' object='libzfuzzer_a-compress.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -c -o libzfuzzer_a-compress.o `test -f 'compress.c' || echo '$(srcdir)/'`compress.c
+
+libzfuzzer_a-compress.obj: compress.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -MT libzfuzzer_a-compress.obj -MD -MP -MF $(DEPDIR)/libzfuzzer_a-compress.Tpo -c -o libzfuzzer_a-compress.obj `if test -f 'compress.c'; then $(CYGPATH_W) 'compress.c'; else $(CYGPATH_W) '$(srcdir)/compress.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libzfuzzer_a-compress.Tpo $(DEPDIR)/libzfuzzer_a-compress.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='compress.c' object='libzfuzzer_a-compress.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -c -o libzfuzzer_a-compress.obj `if test -f 'compress.c'; then $(CYGPATH_W) 'compress.c'; else $(CYGPATH_W) '$(srcdir)/compress.c'; fi`
+
+libzfuzzer_a-crc32.o: crc32.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -MT libzfuzzer_a-crc32.o -MD -MP -MF $(DEPDIR)/libzfuzzer_a-crc32.Tpo -c -o libzfuzzer_a-crc32.o `test -f 'crc32.c' || echo '$(srcdir)/'`crc32.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libzfuzzer_a-crc32.Tpo $(DEPDIR)/libzfuzzer_a-crc32.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='crc32.c' object='libzfuzzer_a-crc32.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -c -o libzfuzzer_a-crc32.o `test -f 'crc32.c' || echo '$(srcdir)/'`crc32.c
+
+libzfuzzer_a-crc32.obj: crc32.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -MT libzfuzzer_a-crc32.obj -MD -MP -MF $(DEPDIR)/libzfuzzer_a-crc32.Tpo -c -o libzfuzzer_a-crc32.obj `if test -f 'crc32.c'; then $(CYGPATH_W) 'crc32.c'; else $(CYGPATH_W) '$(srcdir)/crc32.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libzfuzzer_a-crc32.Tpo $(DEPDIR)/libzfuzzer_a-crc32.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='crc32.c' object='libzfuzzer_a-crc32.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -c -o libzfuzzer_a-crc32.obj `if test -f 'crc32.c'; then $(CYGPATH_W) 'crc32.c'; else $(CYGPATH_W) '$(srcdir)/crc32.c'; fi`
+
+libzfuzzer_a-deflate.o: deflate.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -MT libzfuzzer_a-deflate.o -MD -MP -MF $(DEPDIR)/libzfuzzer_a-deflate.Tpo -c -o libzfuzzer_a-deflate.o `test -f 'deflate.c' || echo '$(srcdir)/'`deflate.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libzfuzzer_a-deflate.Tpo $(DEPDIR)/libzfuzzer_a-deflate.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='deflate.c' object='libzfuzzer_a-deflate.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -c -o libzfuzzer_a-deflate.o `test -f 'deflate.c' || echo '$(srcdir)/'`deflate.c
+
+libzfuzzer_a-deflate.obj: deflate.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -MT libzfuzzer_a-deflate.obj -MD -MP -MF $(DEPDIR)/libzfuzzer_a-deflate.Tpo -c -o libzfuzzer_a-deflate.obj `if test -f 'deflate.c'; then $(CYGPATH_W) 'deflate.c'; else $(CYGPATH_W) '$(srcdir)/deflate.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libzfuzzer_a-deflate.Tpo $(DEPDIR)/libzfuzzer_a-deflate.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='deflate.c' object='libzfuzzer_a-deflate.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -c -o libzfuzzer_a-deflate.obj `if test -f 'deflate.c'; then $(CYGPATH_W) 'deflate.c'; else $(CYGPATH_W) '$(srcdir)/deflate.c'; fi`
+
+libzfuzzer_a-gzread.o: gzread.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -MT libzfuzzer_a-gzread.o -MD -MP -MF $(DEPDIR)/libzfuzzer_a-gzread.Tpo -c -o libzfuzzer_a-gzread.o `test -f 'gzread.c' || echo '$(srcdir)/'`gzread.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libzfuzzer_a-gzread.Tpo $(DEPDIR)/libzfuzzer_a-gzread.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='gzread.c' object='libzfuzzer_a-gzread.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -c -o libzfuzzer_a-gzread.o `test -f 'gzread.c' || echo '$(srcdir)/'`gzread.c
+
+libzfuzzer_a-gzread.obj: gzread.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -MT libzfuzzer_a-gzread.obj -MD -MP -MF $(DEPDIR)/libzfuzzer_a-gzread.Tpo -c -o libzfuzzer_a-gzread.obj `if test -f 'gzread.c'; then $(CYGPATH_W) 'gzread.c'; else $(CYGPATH_W) '$(srcdir)/gzread.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libzfuzzer_a-gzread.Tpo $(DEPDIR)/libzfuzzer_a-gzread.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='gzread.c' object='libzfuzzer_a-gzread.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -c -o libzfuzzer_a-gzread.obj `if test -f 'gzread.c'; then $(CYGPATH_W) 'gzread.c'; else $(CYGPATH_W) '$(srcdir)/gzread.c'; fi`
+
+libzfuzzer_a-gzclose.o: gzclose.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -MT libzfuzzer_a-gzclose.o -MD -MP -MF $(DEPDIR)/libzfuzzer_a-gzclose.Tpo -c -o libzfuzzer_a-gzclose.o `test -f 'gzclose.c' || echo '$(srcdir)/'`gzclose.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libzfuzzer_a-gzclose.Tpo $(DEPDIR)/libzfuzzer_a-gzclose.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='gzclose.c' object='libzfuzzer_a-gzclose.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -c -o libzfuzzer_a-gzclose.o `test -f 'gzclose.c' || echo '$(srcdir)/'`gzclose.c
+
+libzfuzzer_a-gzclose.obj: gzclose.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -MT libzfuzzer_a-gzclose.obj -MD -MP -MF $(DEPDIR)/libzfuzzer_a-gzclose.Tpo -c -o libzfuzzer_a-gzclose.obj `if test -f 'gzclose.c'; then $(CYGPATH_W) 'gzclose.c'; else $(CYGPATH_W) '$(srcdir)/gzclose.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libzfuzzer_a-gzclose.Tpo $(DEPDIR)/libzfuzzer_a-gzclose.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='gzclose.c' object='libzfuzzer_a-gzclose.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -c -o libzfuzzer_a-gzclose.obj `if test -f 'gzclose.c'; then $(CYGPATH_W) 'gzclose.c'; else $(CYGPATH_W) '$(srcdir)/gzclose.c'; fi`
+
+libzfuzzer_a-gzwrite.o: gzwrite.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -MT libzfuzzer_a-gzwrite.o -MD -MP -MF $(DEPDIR)/libzfuzzer_a-gzwrite.Tpo -c -o libzfuzzer_a-gzwrite.o `test -f 'gzwrite.c' || echo '$(srcdir)/'`gzwrite.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libzfuzzer_a-gzwrite.Tpo $(DEPDIR)/libzfuzzer_a-gzwrite.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='gzwrite.c' object='libzfuzzer_a-gzwrite.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -c -o libzfuzzer_a-gzwrite.o `test -f 'gzwrite.c' || echo '$(srcdir)/'`gzwrite.c
+
+libzfuzzer_a-gzwrite.obj: gzwrite.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -MT libzfuzzer_a-gzwrite.obj -MD -MP -MF $(DEPDIR)/libzfuzzer_a-gzwrite.Tpo -c -o libzfuzzer_a-gzwrite.obj `if test -f 'gzwrite.c'; then $(CYGPATH_W) 'gzwrite.c'; else $(CYGPATH_W) '$(srcdir)/gzwrite.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libzfuzzer_a-gzwrite.Tpo $(DEPDIR)/libzfuzzer_a-gzwrite.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='gzwrite.c' object='libzfuzzer_a-gzwrite.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -c -o libzfuzzer_a-gzwrite.obj `if test -f 'gzwrite.c'; then $(CYGPATH_W) 'gzwrite.c'; else $(CYGPATH_W) '$(srcdir)/gzwrite.c'; fi`
+
+libzfuzzer_a-gzlib.o: gzlib.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -MT libzfuzzer_a-gzlib.o -MD -MP -MF $(DEPDIR)/libzfuzzer_a-gzlib.Tpo -c -o libzfuzzer_a-gzlib.o `test -f 'gzlib.c' || echo '$(srcdir)/'`gzlib.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libzfuzzer_a-gzlib.Tpo $(DEPDIR)/libzfuzzer_a-gzlib.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='gzlib.c' object='libzfuzzer_a-gzlib.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -c -o libzfuzzer_a-gzlib.o `test -f 'gzlib.c' || echo '$(srcdir)/'`gzlib.c
+
+libzfuzzer_a-gzlib.obj: gzlib.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -MT libzfuzzer_a-gzlib.obj -MD -MP -MF $(DEPDIR)/libzfuzzer_a-gzlib.Tpo -c -o libzfuzzer_a-gzlib.obj `if test -f 'gzlib.c'; then $(CYGPATH_W) 'gzlib.c'; else $(CYGPATH_W) '$(srcdir)/gzlib.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libzfuzzer_a-gzlib.Tpo $(DEPDIR)/libzfuzzer_a-gzlib.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='gzlib.c' object='libzfuzzer_a-gzlib.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -c -o libzfuzzer_a-gzlib.obj `if test -f 'gzlib.c'; then $(CYGPATH_W) 'gzlib.c'; else $(CYGPATH_W) '$(srcdir)/gzlib.c'; fi`
+
+libzfuzzer_a-infback.o: infback.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -MT libzfuzzer_a-infback.o -MD -MP -MF $(DEPDIR)/libzfuzzer_a-infback.Tpo -c -o libzfuzzer_a-infback.o `test -f 'infback.c' || echo '$(srcdir)/'`infback.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libzfuzzer_a-infback.Tpo $(DEPDIR)/libzfuzzer_a-infback.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='infback.c' object='libzfuzzer_a-infback.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -c -o libzfuzzer_a-infback.o `test -f 'infback.c' || echo '$(srcdir)/'`infback.c
+
+libzfuzzer_a-infback.obj: infback.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -MT libzfuzzer_a-infback.obj -MD -MP -MF $(DEPDIR)/libzfuzzer_a-infback.Tpo -c -o libzfuzzer_a-infback.obj `if test -f 'infback.c'; then $(CYGPATH_W) 'infback.c'; else $(CYGPATH_W) '$(srcdir)/infback.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libzfuzzer_a-infback.Tpo $(DEPDIR)/libzfuzzer_a-infback.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='infback.c' object='libzfuzzer_a-infback.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -c -o libzfuzzer_a-infback.obj `if test -f 'infback.c'; then $(CYGPATH_W) 'infback.c'; else $(CYGPATH_W) '$(srcdir)/infback.c'; fi`
+
+libzfuzzer_a-inffast.o: inffast.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -MT libzfuzzer_a-inffast.o -MD -MP -MF $(DEPDIR)/libzfuzzer_a-inffast.Tpo -c -o libzfuzzer_a-inffast.o `test -f 'inffast.c' || echo '$(srcdir)/'`inffast.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libzfuzzer_a-inffast.Tpo $(DEPDIR)/libzfuzzer_a-inffast.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='inffast.c' object='libzfuzzer_a-inffast.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -c -o libzfuzzer_a-inffast.o `test -f 'inffast.c' || echo '$(srcdir)/'`inffast.c
+
+libzfuzzer_a-inffast.obj: inffast.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -MT libzfuzzer_a-inffast.obj -MD -MP -MF $(DEPDIR)/libzfuzzer_a-inffast.Tpo -c -o libzfuzzer_a-inffast.obj `if test -f 'inffast.c'; then $(CYGPATH_W) 'inffast.c'; else $(CYGPATH_W) '$(srcdir)/inffast.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libzfuzzer_a-inffast.Tpo $(DEPDIR)/libzfuzzer_a-inffast.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='inffast.c' object='libzfuzzer_a-inffast.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -c -o libzfuzzer_a-inffast.obj `if test -f 'inffast.c'; then $(CYGPATH_W) 'inffast.c'; else $(CYGPATH_W) '$(srcdir)/inffast.c'; fi`
+
+libzfuzzer_a-inflate.o: inflate.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -MT libzfuzzer_a-inflate.o -MD -MP -MF $(DEPDIR)/libzfuzzer_a-inflate.Tpo -c -o libzfuzzer_a-inflate.o `test -f 'inflate.c' || echo '$(srcdir)/'`inflate.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libzfuzzer_a-inflate.Tpo $(DEPDIR)/libzfuzzer_a-inflate.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='inflate.c' object='libzfuzzer_a-inflate.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -c -o libzfuzzer_a-inflate.o `test -f 'inflate.c' || echo '$(srcdir)/'`inflate.c
+
+libzfuzzer_a-inflate.obj: inflate.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -MT libzfuzzer_a-inflate.obj -MD -MP -MF $(DEPDIR)/libzfuzzer_a-inflate.Tpo -c -o libzfuzzer_a-inflate.obj `if test -f 'inflate.c'; then $(CYGPATH_W) 'inflate.c'; else $(CYGPATH_W) '$(srcdir)/inflate.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libzfuzzer_a-inflate.Tpo $(DEPDIR)/libzfuzzer_a-inflate.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='inflate.c' object='libzfuzzer_a-inflate.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -c -o libzfuzzer_a-inflate.obj `if test -f 'inflate.c'; then $(CYGPATH_W) 'inflate.c'; else $(CYGPATH_W) '$(srcdir)/inflate.c'; fi`
+
+libzfuzzer_a-inftrees.o: inftrees.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -MT libzfuzzer_a-inftrees.o -MD -MP -MF $(DEPDIR)/libzfuzzer_a-inftrees.Tpo -c -o libzfuzzer_a-inftrees.o `test -f 'inftrees.c' || echo '$(srcdir)/'`inftrees.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libzfuzzer_a-inftrees.Tpo $(DEPDIR)/libzfuzzer_a-inftrees.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='inftrees.c' object='libzfuzzer_a-inftrees.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -c -o libzfuzzer_a-inftrees.o `test -f 'inftrees.c' || echo '$(srcdir)/'`inftrees.c
+
+libzfuzzer_a-inftrees.obj: inftrees.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -MT libzfuzzer_a-inftrees.obj -MD -MP -MF $(DEPDIR)/libzfuzzer_a-inftrees.Tpo -c -o libzfuzzer_a-inftrees.obj `if test -f 'inftrees.c'; then $(CYGPATH_W) 'inftrees.c'; else $(CYGPATH_W) '$(srcdir)/inftrees.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libzfuzzer_a-inftrees.Tpo $(DEPDIR)/libzfuzzer_a-inftrees.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='inftrees.c' object='libzfuzzer_a-inftrees.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -c -o libzfuzzer_a-inftrees.obj `if test -f 'inftrees.c'; then $(CYGPATH_W) 'inftrees.c'; else $(CYGPATH_W) '$(srcdir)/inftrees.c'; fi`
+
+libzfuzzer_a-trees.o: trees.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -MT libzfuzzer_a-trees.o -MD -MP -MF $(DEPDIR)/libzfuzzer_a-trees.Tpo -c -o libzfuzzer_a-trees.o `test -f 'trees.c' || echo '$(srcdir)/'`trees.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libzfuzzer_a-trees.Tpo $(DEPDIR)/libzfuzzer_a-trees.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='trees.c' object='libzfuzzer_a-trees.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -c -o libzfuzzer_a-trees.o `test -f 'trees.c' || echo '$(srcdir)/'`trees.c
+
+libzfuzzer_a-trees.obj: trees.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -MT libzfuzzer_a-trees.obj -MD -MP -MF $(DEPDIR)/libzfuzzer_a-trees.Tpo -c -o libzfuzzer_a-trees.obj `if test -f 'trees.c'; then $(CYGPATH_W) 'trees.c'; else $(CYGPATH_W) '$(srcdir)/trees.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libzfuzzer_a-trees.Tpo $(DEPDIR)/libzfuzzer_a-trees.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='trees.c' object='libzfuzzer_a-trees.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -c -o libzfuzzer_a-trees.obj `if test -f 'trees.c'; then $(CYGPATH_W) 'trees.c'; else $(CYGPATH_W) '$(srcdir)/trees.c'; fi`
+
+libzfuzzer_a-uncompr.o: uncompr.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -MT libzfuzzer_a-uncompr.o -MD -MP -MF $(DEPDIR)/libzfuzzer_a-uncompr.Tpo -c -o libzfuzzer_a-uncompr.o `test -f 'uncompr.c' || echo '$(srcdir)/'`uncompr.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libzfuzzer_a-uncompr.Tpo $(DEPDIR)/libzfuzzer_a-uncompr.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='uncompr.c' object='libzfuzzer_a-uncompr.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -c -o libzfuzzer_a-uncompr.o `test -f 'uncompr.c' || echo '$(srcdir)/'`uncompr.c
+
+libzfuzzer_a-uncompr.obj: uncompr.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -MT libzfuzzer_a-uncompr.obj -MD -MP -MF $(DEPDIR)/libzfuzzer_a-uncompr.Tpo -c -o libzfuzzer_a-uncompr.obj `if test -f 'uncompr.c'; then $(CYGPATH_W) 'uncompr.c'; else $(CYGPATH_W) '$(srcdir)/uncompr.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libzfuzzer_a-uncompr.Tpo $(DEPDIR)/libzfuzzer_a-uncompr.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='uncompr.c' object='libzfuzzer_a-uncompr.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -c -o libzfuzzer_a-uncompr.obj `if test -f 'uncompr.c'; then $(CYGPATH_W) 'uncompr.c'; else $(CYGPATH_W) '$(srcdir)/uncompr.c'; fi`
+
+libzfuzzer_a-zutil.o: zutil.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -MT libzfuzzer_a-zutil.o -MD -MP -MF $(DEPDIR)/libzfuzzer_a-zutil.Tpo -c -o libzfuzzer_a-zutil.o `test -f 'zutil.c' || echo '$(srcdir)/'`zutil.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libzfuzzer_a-zutil.Tpo $(DEPDIR)/libzfuzzer_a-zutil.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='zutil.c' object='libzfuzzer_a-zutil.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -c -o libzfuzzer_a-zutil.o `test -f 'zutil.c' || echo '$(srcdir)/'`zutil.c
+
+libzfuzzer_a-zutil.obj: zutil.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -MT libzfuzzer_a-zutil.obj -MD -MP -MF $(DEPDIR)/libzfuzzer_a-zutil.Tpo -c -o libzfuzzer_a-zutil.obj `if test -f 'zutil.c'; then $(CYGPATH_W) 'zutil.c'; else $(CYGPATH_W) '$(srcdir)/zutil.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libzfuzzer_a-zutil.Tpo $(DEPDIR)/libzfuzzer_a-zutil.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='zutil.c' object='libzfuzzer_a-zutil.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libzfuzzer_a_CFLAGS) $(CFLAGS) -c -o libzfuzzer_a-zutil.obj `if test -f 'zutil.c'; then $(CYGPATH_W) 'zutil.c'; else $(CYGPATH_W) '$(srcdir)/zutil.c'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo

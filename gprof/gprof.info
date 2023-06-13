@@ -1,4 +1,4 @@
-This is gprof.info, produced by makeinfo version 6.5 from gprof.texi.
+This is gprof.info, produced by makeinfo version 6.7 from gprof.texi.
 
 This file documents the gprof profiler of the GNU system.
 
@@ -121,6 +121,10 @@ use.)
 to do the linking, simply specify '-pg' in addition to your usual
 options.  The same option, '-pg', alters either compilation or linking
 to do what is necessary for profiling.  Here are examples:
+
+   If you use gcc 2.95.x or 3.0.x, you may need to add the
+'-fprofile-arcs' option to the compile line along with '-pg' in order to
+allow the call-graphs to be properly included in the gmon.out file.
 
      cc -g -c myprog.c utils.c -pg
      cc -o myprog myprog.o utils.o -pg
@@ -2427,32 +2431,37 @@ Tag Table:
 Node: Top719
 Node: Introduction2042
 Node: Compiling4533
-Node: Executing8589
-Node: Invoking11377
-Node: Output Options12792
-Node: Analysis Options19884
-Node: Miscellaneous Options23804
-Node: Deprecated Options25058
-Node: Symspecs27121
-Node: Output28947
-Node: Flat Profile29987
-Node: Call Graph34940
-Node: Primary38172
-Node: Callers40760
-Node: Subroutines42878
-Node: Cycles44719
-Node: Line-by-line51496
-Node: Annotated Source55572
-Node: Inaccuracy58570
-Node: Sampling Error58828
-Node: Assumptions61732
-Node: How do I?63202
-Node: Incompatibilities64759
-Node: Details66253
-Node: Implementation66646
-Node: File Format72545
-Node: Internals76833
-Node: Debugging85323
-Node: GNU Free Documentation License86913
+Node: Executing8790
+Node: Invoking11578
+Node: Output Options12993
+Node: Analysis Options20085
+Node: Miscellaneous Options24005
+Node: Deprecated Options25259
+Node: Symspecs27322
+Node: Output29148
+Node: Flat Profile30188
+Node: Call Graph35141
+Node: Primary38373
+Node: Callers40961
+Node: Subroutines43079
+Node: Cycles44920
+Node: Line-by-line51697
+Node: Annotated Source55773
+Node: Inaccuracy58771
+Node: Sampling Error59029
+Node: Assumptions61933
+Node: How do I?63403
+Node: Incompatibilities64960
+Node: Details66454
+Node: Implementation66847
+Node: File Format72746
+Node: Internals77034
+Node: Debugging85524
+Node: GNU Free Documentation License87114
 
 End Tag Table
+
+
+Local Variables:
+coding: utf-8
+End:

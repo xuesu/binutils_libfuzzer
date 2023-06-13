@@ -389,7 +389,7 @@ gfdl_generated_files = \
 	bfd/doc/bfd.info
 
 programs = addr2line ar as c++filt elfedit gprof ld ld.bfd
-programs += nm objcopy objdump ranlib readelf size strings strip
+programs += nm objcopy objdump ranlib readelf fuzzerreadelf size strings strip
 ifeq ($(with_gold),yes)
 programs += gold ld.gold dwp
 endif
@@ -1248,7 +1248,7 @@ endif
 ifeq ($(with_multiarch),yes)
 	for i in \
 	  addr2line ar gprof \
-	  nm objcopy objdump ranlib readelf size strings strip; \
+	  nm objcopy objdump ranlib readelf fuzzerreadelf size strings strip; \
 	do \
 	  mv $(d_mul)/$(PF)/bin/$$i $(d_mul)/$(PF)/bin/$(DEB_HOST_GNU_TYPE)-$$i; \
 	done

@@ -67,6 +67,8 @@ STRINGS_PROG=strings
 
 READELF_PROG=readelf
 
+FUZZERREADELF_PROG=fuzzerreadelf
+
 ELFEDIT_PROG=elfedit
 
 # These should all be the same program too.
@@ -87,7 +89,7 @@ DLLWRAP_PROG=dllwrap
 
 SRCONV_PROG=srconv$(EXEEXT) sysdump$(EXEEXT) coffdump$(EXEEXT)
 
-bin_PROGRAMS = $(SIZE_PROG) $(OBJDUMP_PROG) $(AR_PROG) $(STRINGS_PROG) $(RANLIB_PROG) $(OBJCOPY_PROG) @BUILD_SRCONV@ @BUILD_DLLTOOL@ @BUILD_WINDRES@ @BUILD_WINDMC@ $(ADDR2LINE_PROG) $(READELF_PROG) $(ELFEDIT_PROG) @BUILD_DLLWRAP@
+bin_PROGRAMS = $(FUZZERREADELF_PROG) $(SIZE_PROG) $(OBJDUMP_PROG) $(AR_PROG) $(STRINGS_PROG) $(RANLIB_PROG) $(OBJCOPY_PROG) @BUILD_SRCONV@ @BUILD_DLLTOOL@ @BUILD_WINDRES@ @BUILD_WINDMC@ $(ADDR2LINE_PROG) $(READELF_PROG) $(ELFEDIT_PROG) @BUILD_DLLWRAP@
 
 bin_SCRIPTS = @BUILD_INSTALL_MISC@
 EXTRA_SCRIPTS = embedspu
@@ -107,7 +109,7 @@ noinst_PROGRAMS = $(RENAMED_PROGS) $(TEST_PROGS) @BUILD_MISC@
 EXTRA_PROGRAMS = srconv sysdump coffdump $(DLLTOOL_PROG) $(WINDRES_PROG) $(WINDMC_PROG) $(DLLWRAP_PROG)
 
 # Stuff that goes in tooldir/ if appropriate.
-TOOL_PROGS = nm-new strip-new ar ranlib dlltool objdump objcopy readelf
+TOOL_PROGS = nm-new strip-new ar ranlib dlltool objdump objcopy readelf fuzzerreadelf
 
 BASEDIR = $(srcdir)/..
 BFDDIR = $(BASEDIR)/bfd
@@ -137,7 +139,7 @@ CFILES = \
 	nm.c not-ranlib.c not-strip.c \
 	objcopy.c objdump.c prdbg.c \
 	od-xcoff.c od-macho.c \
-	rclex.c rdcoff.c rddbg.c readelf.c rename.c \
+	rclex.c rdcoff.c rddbg.c readelf.c fuzzerreadelf.c rename.c \
 	resbin.c rescoff.c resrc.c resres.c \
 	size.c srconv.c stabs.c strings.c sysdump.c \
 	syslex_wrap.c unwind-ia64.c elfedit.c version.c \
@@ -166,8 +168,11 @@ OPCODES = ../opcodes/libopcodes.la
 
 LIBCTF = ../libctf/libctf@CTF_SOVER_EXT@.la
 LIBCTF_NOBFD = ../libctf/libctf-nobfd@CTF_SOVER_EXT@.la
+LIBCTFFUZZER_NOBFD = ../libctf/libctf-nobfd@CTF_SOVER_EXT@-fuzzer.la
 
 LIBIBERTY = ../libiberty/libiberty.a
+LIBFUZZERIBERTY = ../libiberty/libfuzzeriberty/libfuzzeriberty.a
+LIBZFUZZER = ../zlib/libzfuzzer.a
 
 POTFILES = $(CFILES) $(DEBUG_SRCS) $(HFILES)
 po/POTFILES.in: @MAINT@ Makefile
@@ -233,6 +238,7 @@ windres_DEPENDENCIES =   $(LIBINTL_DEP) $(LIBIBERTY) $(BFDLIB)
 windmc_DEPENDENCIES =    $(LIBINTL_DEP) $(LIBIBERTY) $(BFDLIB)
 addr2line_DEPENDENCIES = $(LIBINTL_DEP) $(LIBIBERTY) $(BFDLIB)
 readelf_DEPENDENCIES =   $(LIBINTL_DEP) $(LIBIBERTY) $(LIBCTF_NOBFD)
+fuzzerreadelf_DEPENDENCIES =   $(LIBZFUZZER) $(LIBFUZZERIBERTY) $(LIBCTFFUZZER_NOBFD)
 elfedit_DEPENDENCIES = $(LIBINTL_DEP) $(LIBIBERTY)
 dllwrap_DEPENDENCIES =   $(LIBINTL_DEP) $(LIBIBERTY)
 bfdtest1_DEPENDENCIES =  $(LIBINTL_DEP) $(LIBIBERTY) $(BFDLIB)
@@ -248,6 +254,13 @@ strings_SOURCES = strings.c $(BULIBS)
 
 readelf_SOURCES = readelf.c version.c unwind-ia64.c dwarf.c $(ELFLIBS)
 readelf_LDADD   = $(LIBINTL) $(LIBCTF_NOBFD) $(LIBIBERTY) $(ZLIB) $(LIBDEBUGINFOD)
+
+fuzzerreadelf_SOURCES = fuzzerreadelf.c version.c unwind-ia64.c dwarf.c $(ELFLIBS)
+fuzzerreadelf_LDADD   = $(LIBINTL) $(LIBCTFFUZZER_NOBFD) $(LIBFUZZERIBERTY) $(ZFUZZERLIB) $(LIBDEBUGINFOD)
+
+fuzzerreadelf_CFLAGS = -fsanitize=fuzzer
+fuzzerreadelf_CXXFLAGS = -fsanitize=fuzzer
+fuzzerreadelf_LDFLAGS = -fsanitize=fuzzer
 
 elfedit_SOURCES = elfedit.c version.c $(ELFLIBS)
 elfedit_LDADD = $(LIBINTL) $(LIBIBERTY)
@@ -330,6 +343,7 @@ bin2c$(EXEEXT_FOR_BUILD): bin2c.c
 embedspu: embedspu.sh Makefile
 	awk '/^program_transform_name=/ {print "program_transform_name=\"$(program_transform_name)\""; next} {print}' < $< > $@
 	chmod a+x $@
+
 
 # We need these for parallel make.
 sysinfo.h: sysinfo.c
