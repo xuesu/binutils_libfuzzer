@@ -152,7 +152,7 @@ TEXI2DVI = texi2dvi -I $(srcdir) -I $(BFDDIR)/doc -I ../bfd/doc \
 		    -I $(top_srcdir)/../libiberty
 
 AM_CPPFLAGS = -I. -I$(srcdir) -I../bfd -I$(BFDDIR) -I$(INCDIR) @zlibinc@ \
-	@INCINTL@ $(HDEFINES) $(CFLAGS) $(PLUGIN_CFLAGS) \
+	@INCINTL@ $(HDEFINES) $(PLUGIN_CFLAGS) \
 	-DLOCALEDIR="\"$(datadir)/locale\""
 
 BFDLIB = ../bfd/libbfd.la
@@ -1091,3 +1091,4 @@ distclean-local:
 	rm -rf ldscripts
 
 MAINTAINERCLEANFILES += ld.info
+

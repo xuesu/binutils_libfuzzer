@@ -52,15 +52,15 @@ build_old_libs=yes
 pic_mode=default
 
 # Whether or not to optimize for fast installation.
-fast_install=needless
+fast_install=yes
 
 # The host system.
-host_alias=x86_64-pc-linux-gnu
+host_alias=
 host=x86_64-pc-linux-gnu
 host_os=linux-gnu
 
 # The build system.
-build_alias=x86_64-pc-linux-gnu
+build_alias=
 build=x86_64-pc-linux-gnu
 build_os=linux-gnu
 
@@ -80,7 +80,7 @@ EGREP="/usr/bin/grep -E"
 FGREP="/usr/bin/grep -F"
 
 # A BSD- or MS-compatible name lister.
-NM="nm"
+NM="/usr/bin/nm -B"
 
 # Whether we need soft or hard links.
 LN_S="ln -s"
@@ -115,7 +115,7 @@ file_magic_cmd="\$MAGIC_CMD"
 
 # The archiver.
 AR="ar"
-AR_FLAGS="rc"
+AR_FLAGS="cru"
 
 # A symbol stripping program.
 STRIP="strip"
@@ -129,7 +129,7 @@ old_postuninstall_cmds=""
 LTCC="clang"
 
 # LTCC compiler flags.
-LTCFLAGS="-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION "
+LTCFLAGS="-g -fprofile-instr-generate -fcoverage-mapping -mllvm -runtime-counter-relocation -O1 -fno-omit-frame-pointer -gline-tables-only -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -pthread -Wl,--no-as-needed -Wl,-ldl -Wl,-lm -Wno-unused-command-line-argument"
 
 # Take the output of nm and produce a listing of raw symbols and C names.
 global_symbol_pipe="sed -n -e 's/^.*[	 ]\\([ABCDGIRSTW][ABCDGIRSTW]*\\)[	 ][	 ]*\\([_A-Za-z][_A-Za-z0-9]*\\)\$/\\1 \\2 \\2/p'"
@@ -193,7 +193,7 @@ runpath_var=LD_RUN_PATH
 shlibpath_var=LD_LIBRARY_PATH
 
 # Is shlibpath searched before the hard-coded library search path?
-shlibpath_overrides_runpath=yes
+shlibpath_overrides_runpath=no
 
 # Format of library name prefix.
 libname_spec="lib\$name"
@@ -8358,7 +8358,7 @@ compiler_lib_search_dirs="/usr/lib/gcc/x86_64-linux-gnu/9 /usr/lib/gcc/x86_64-li
 predep_objects="/lib/x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o"
 postdep_objects="/usr/lib/gcc/x86_64-linux-gnu/9/crtendS.o /lib/x86_64-linux-gnu/crtn.o"
 predeps=""
-postdeps="-lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc"
+postdeps="-lstdc++ -lm -lgcc_s -lgcc -lpthread -lc -lgcc_s -lgcc"
 
 # The library search path used internally by the compiler when linking
 # a shared library.

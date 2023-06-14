@@ -29,7 +29,7 @@ subdir = po
 DESTDIR =
 
 INSTALL = /usr/bin/install -c
-INSTALL_DATA = /usr/bin/install -c -m 644
+INSTALL_DATA = ${INSTALL} -m 644
 MKINSTALLDIRS = $(top_builddir)/./../mkinstalldirs
 
 CC = clang
@@ -40,7 +40,7 @@ XGETTEXT = PATH=../src:$$PATH /usr/local/bin/xgettext
 MSGMERGE = PATH=../src:$$PATH msgmerge
 
 DEFS = -DHAVE_CONFIG_H
-CFLAGS = -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION 
+CFLAGS = -g -fprofile-instr-generate -fcoverage-mapping -mllvm -runtime-counter-relocation -O1 -fno-omit-frame-pointer -gline-tables-only -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -pthread -Wl,--no-as-needed -Wl,-ldl -Wl,-lm -Wno-unused-command-line-argument
 CPPFLAGS = 
 
 INCLUDES = -I.. -I$(top_srcdir)/intl
