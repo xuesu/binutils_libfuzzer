@@ -256,7 +256,7 @@ readelf_SOURCES = readelf.c version.c unwind-ia64.c dwarf.c $(ELFLIBS)
 readelf_LDADD   = $(LIBINTL) $(LIBCTF_NOBFD) $(LIBIBERTY) $(ZLIB) $(LIBDEBUGINFOD)
 
 fuzzerreadelf_SOURCES = fuzzerreadelf.c version.c unwind-ia64.c dwarf.c $(ELFLIBS)
-fuzzerreadelf_LDADD   = $(LIBINTL) $(LIBCTFFUZZER_NOBFD) $(LIBFUZZERIBERTY) $(ZFUZZERLIB) $(LIBDEBUGINFOD)
+fuzzerreadelf_LDADD   = $(LIBINTL) $(LIBCTFFUZZER_NOBFD) $(LIBFUZZERIBERTY) $(LIBZFUZZER) $(LIBDEBUGINFOD)
 
 fuzzerreadelf_CFLAGS = -fsanitize=fuzzer
 fuzzerreadelf_CXXFLAGS = -fsanitize=fuzzer
@@ -547,3 +547,4 @@ install-exec-local: install-binPROGRAMS $(bin_PROGRAMS) $(noinst_PROGRAMS)
 	  else true; \
 	  fi; \
 	done
+
